@@ -1,0 +1,240 @@
+body {
+  background: #f6f3ed;
+  color: #24251f;
+  font-family: system-ui, sans-serif;
+}
+.container {
+  max-width: 1120px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 26px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid #d8d6ce;
+}
+.marca {
+  font-weight: 800;
+  color: inherit;
+  text-decoration: none;
+  letter-spacing: 2px;
+}
+.topo > span,
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+}
+.intro {
+  padding: 64px 0 44px;
+}
+.eyebrow {
+  color: #6c7358;
+  font-weight: 700;
+}
+h1 {
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  line-height: 1.05;
+  letter-spacing: -2px;
+  font-weight: 750;
+  margin: 20px 0;
+}
+.intro > p:not(.eyebrow) {
+  max-width: 480px;
+  color: #63645b;
+  line-height: 1.7;
+}
+.etiqueta {
+  display: inline-block;
+  border: 1px solid #c7cbbc;
+  border-radius: 30px;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+}
+.titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.titulo h2 {
+  font-size: 1.5rem;
+}
+.titulo span {
+  color: #777;
+  font-size: 0.8rem;
+}
+.card {
+  border: 1px solid #deddd4;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fffdf8;
+}
+.produto-arte {
+  height: 225px;
+  background: #e7e6dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.numero {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  color: #888c7c;
+  font-size: 0.8rem;
+}
+.embalagem {
+  width: 128px;
+  height: 130px;
+  border-top: 17px solid #24251f;
+  background: #535f45;
+  color: #f7f3e9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  box-shadow: 8px 12px 18px #0002;
+  border-radius: 12px 12px 20px 20px;
+}
+.embalagem strong {
+  font-size: 1.1rem;
+  margin: 9px 0;
+}
+.embalagem small {
+  font-size: 0.45rem;
+}
+.card-body {
+  padding: 24px;
+}
+.card-body p {
+  color: #68695e;
+  min-height: 48px;
+  font-size: 0.9rem;
+}
+.preco {
+  font-size: 1.3rem;
+}
+.selecao {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-top: 1px solid #e4e3da;
+  margin-top: 20px;
+  padding-top: 18px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.form-check-input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #3c5034;
+}
+.form-check-input:checked {
+  background-color: #3c5034;
+  border-color: #3c5034;
+}
+.card:has(input:checked) {
+  outline: 2px solid #566a45;
+}
+.resumo {
+  margin-top: 32px;
+  background: #e8ebdf;
+  border-radius: 12px;
+  padding: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+.resumo ul {
+  padding-left: 20px;
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+.fechamento {
+  min-width: 280px;
+}
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.total strong {
+  font-size: 1.7rem;
+}
+.finalizar {
+  background: #34462f;
+  color: white;
+  width: 100%;
+  padding: 14px;
+  font-weight: 600;
+}
+.finalizar:hover,
+.finalizar:focus {
+  background: #243421;
+  color: white;
+}
+.limpar {
+  display: block;
+  margin: 12px auto;
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  font-size: 0.85rem;
+}
+.fechamento small {
+  display: block;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #626857;
+}
+#aviso {
+  color: #663e22;
+  margin-top: 16px;
+}
+#previa {
+  padding: 20px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+pre {
+  white-space: pre-wrap;
+  font: inherit;
+  font-size: 0.9rem;
+}
+footer {
+  padding-top: 36px;
+  padding-bottom: 32px;
+  font-size: 0.75rem;
+  color: #737369;
+  line-height: 1.8;
+}
+@media (max-width: 600px) {
+  .topo > span {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+  }
+  .marca {
+    font-size: 0.8rem;
+  }
+  .intro {
+    padding-top: 40px;
+  }
+  .resumo {
+    flex-direction: column;
+    padding: 22px;
+  }
+  .fechamento {
+    min-width: 0;
+  }
+  .produto-arte {
+    height: 190px;
+  }
+}
