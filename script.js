@@ -80,6 +80,28 @@ formulario.addEventListener("reset", function () {
 });
 
 // Monta o pedido e abre o WhatsApp.
+// Recebe o pedido e devolve a mensagem pronta.
+function montarMensagem(pedido) {
+  const linhasPedido = pedido.itens.map(function (item) {
+    const precoFormatado = moeda.format(item.precoCentavos / 100);
+
+    return `• ${item.nome} — ${precoFormatado}`;
+  });
+
+  const totalFormatado = moeda.format(pedido.totalCentavos / 100);
+
+  return [
+    "Olá! Gostaria de pedir os seguintes produtos:",
+    "",
+    ...linhasPedido,
+    "",
+    `*Total: ${totalFormatado}*`,
+    "",
+    "Retirada e pagamento na barbearia. Pode confirmar a disponibilidade?",
+  ].join("\n");
+}
+
+// Valida o pedido e abre o WhatsApp.
 formulario.addEventListener("submit", function (evento) {
   evento.preventDefault();
   aviso.textContent = "";
@@ -98,19 +120,7 @@ formulario.addEventListener("submit", function (evento) {
       return;
     }
 
-    const linhasPedido = pedido.itens.map(function (item) {
-      return `${item.nome} — ${moeda.format(item.precoCentavos / 100)}`;
-    });
-
-    const mensagem = [
-      "Olá! Gostaria de pedir os seguintes produtos:",
-      "",
-      ...linhasPedido,
-      "",
-      `*Total: ${moeda.format(pedido.totalCentavos / 100)}*`,
-      "",
-      "Retirada e pagamento na barbearia. Pode confirmar a disponibilidade?",
-    ].join("\n");
+    const mensagem = montarMensagem(pedido);
 
     const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(
       mensagem,
@@ -122,4 +132,7 @@ formulario.addEventListener("submit", function (evento) {
   }
 });
 
+// Atualiza o resumo ao carregar a página.
 atualizarResumo();
+
+const mensagem = montarMensagem(pedido);
