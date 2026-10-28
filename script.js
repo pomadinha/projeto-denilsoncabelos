@@ -3,6 +3,7 @@ const numeroWhatsApp = "5599991059284"; //numero de denilson
 const formulario = document.getElementById("formPedido");
 const aviso = document.getElementById("aviso");
 const totalPedido = document.getElementById("totalPedido");
+const listaPedido = document.getElementById("listaPedido");
 
 const moeda = new Intl.NumberFormat("pt-BR", {
   style: "currency",
@@ -40,10 +41,31 @@ function obterPedido() {
 function atualizarResumo() {
   aviso.textContent = "";
 
+  // Remove os itens exibidos anteriormente.
+  listaPedido.replaceChildren();
+
   try {
     const pedido = obterPedido();
 
     totalPedido.textContent = moeda.format(pedido.totalCentavos / 100);
+
+    if (pedido.itens.length === 0) {
+      const itemLista = document.createElement("li");
+
+      itemLista.textContent = "Nenhum produto selecionado.";
+      listaPedido.appendChild(itemLista);
+      return;
+    }
+
+    for (const item of pedido.itens) {
+      const itemLista = document.createElement("li");
+
+      itemLista.textContent = `${item.nome} — ${moeda.format(
+        item.precoCentavos / 100,
+      )}`;
+
+      listaPedido.appendChild(itemLista);
+    }
   } catch (erro) {
     totalPedido.textContent = "—";
     aviso.textContent = erro.message;
@@ -52,6 +74,10 @@ function atualizarResumo() {
 
 // Atualiza quando o cliente marca ou desmarca um produto.
 formulario.addEventListener("change", atualizarResumo);
+formulario.addEventListener("reset", function () {
+  // Aguarda o navegador desmarcar os checkboxes.
+  setTimeout(atualizarResumo, 0);
+});
 
 // Monta o pedido e abre o WhatsApp.
 formulario.addEventListener("submit", function (evento) {

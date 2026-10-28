@@ -45,10 +45,19 @@
           Balm para Barba — R$ 32,00
         </label>
       </p>
+      <h2>Resumo do pedido</h2>
 
-      <p>Total:<strong id="totalPedido" aria-live="polite">R$0,00</strong></p>
+      <ul id="listaPedido">
+        <li>Nenhum produto selecionado.</li>
+      </ul>
+
+      <p>
+        Total:
+        <strong id="totalPedido" aria-live="polite">R$ 0,00</strong>
+      </p>
 
       <button type="submit">Finalizar pedido</button>
+      <button type="reset">Limpar seleção</button>
     </form>
 
     <p id="aviso" role="status"></p>
