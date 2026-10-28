@@ -55,8 +55,7 @@ formulario.addEventListener("submit", function (evento) {
     "",
     `*Total: ${moeda.format(totalCentavos / 100)}*`,
     "",
-    "Retirada e pagamento na barbearia.",
-    "Pode confirmar a disponibilidade?",
+    "Retirada e pagamento na barbearia. Pode confirmar a disponibilidade?",
   ].join("\n");
 
   // Prepara o texto para ser utilizado dentro de um link.
