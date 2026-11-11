@@ -95,7 +95,7 @@ const catalogoProdutos = [
   },
   {
     id: "ffmen-oil",
-    nome: "Fox For Men - Óleo para Barba",
+    nome: "Fox For Men - Loção Pós Barba",
     categoria: "Barba",
     preco: "1.00",
     imagem: "assets/produtos/barba/locaob.png",
