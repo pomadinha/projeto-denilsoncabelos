@@ -154,27 +154,8 @@ const catalogoProdutos = [
     disponivel: true,
   },
   ////////////////////////////////////////////////////////
-  {
-    id: "testeproduto",
-    nome: "teste de produto",
-    categoria: "Camisas",
-    preco: "1.00",
-    imagem: "assets/",
-    descricao: "Complete seu teste de teste e teste.",
-    uso: "Exemplo de uso: distribua um pequeno teste pelo teste e modele. Confira as instruções do fabricante do produto real.",
-    disponivel: true,
-  },
+
   /////////////////////////////////////////////////////////
-  {
-    id: "testeproduto",
-    nome: "teste de produto",
-    categoria: "Eletronicos",
-    preco: "1.00",
-    imagem: "assets/",
-    descricao: "Complete seu teste de teste e teste.",
-    uso: "Exemplo de uso: distribua um pequeno teste pelo teste e modele. Confira as instruções do fabricante do produto real.",
-    disponivel: true,
-  },
 ];
 // Escapa o conteúdo antes de compor os cards. Os dados permanecem editáveis aqui.
 function escaparHTML(valor) {
