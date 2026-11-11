@@ -4,7 +4,7 @@
 const catalogoProdutos = [
   {
     id: "gel-classea",
-    nome: "Gel Cera Hidratante Classe A",
+    nome: "ClasseA - Gel Cera Hidratante ",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/gclassea.jpg",
@@ -14,7 +14,7 @@ const catalogoProdutos = [
   },
   {
     id: "gel-cola",
-    nome: "Gel Cola",
+    nome: "Gel Cola - Fixação Extra Forte",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/gelcola.jpg",
@@ -24,7 +24,7 @@ const catalogoProdutos = [
   },
   {
     id: "maquina-kemei",
-    nome: "Máquina Kemei",
+    nome: "Kemei - Máquina para Aparar Pelos",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/kemei.jpg",
@@ -34,7 +34,7 @@ const catalogoProdutos = [
   },
   {
     id: "maquina-comum",
-    nome: "Máquina LT-808",
+    nome: "LT-808 - Máquina para Aparar Pelos",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/mcabelo.jpg",
@@ -44,7 +44,7 @@ const catalogoProdutos = [
   },
   {
     id: "pomada-black",
-    nome: "Pasta Black Premium",
+    nome: "Fox For Men - Pasta Black Premium",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/pblack.jpg",
@@ -54,7 +54,7 @@ const catalogoProdutos = [
   },
   {
     id: "pomada-caramelo",
-    nome: "Cera Hair Caramelo",
+    nome: "Fox For Men - Cera Hair Caramelo",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/pcaramelo.png",
@@ -64,7 +64,7 @@ const catalogoProdutos = [
   },
   {
     id: "pomada-gromming",
-    nome: "Pomada Gromming",
+    nome: "Zoteri - Pomada Capilar Gromming",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/pgromming.jpg",
@@ -74,7 +74,7 @@ const catalogoProdutos = [
   },
   {
     id: "pomada-po",
-    nome: "Pomada em Pó",
+    nome: "Zoteri - Pomada Capilar em Pó",
     categoria: "Cabelo",
     preco: "1.00",
     imagem: "assets/produtos/cabelo/ppo.jpg",
@@ -148,7 +148,7 @@ const catalogoProdutos = [
     nome: "The Dodger - Óleo para Barba",
     categoria: "Barba",
     preco: "1.00",
-    imagem: "assets/produtos/barba/thedodger.jpg",
+    imagem: "assets/produtos/barba/tdodger.jpg",
     descricao: "...",
     uso: "...",
     disponivel: true,
