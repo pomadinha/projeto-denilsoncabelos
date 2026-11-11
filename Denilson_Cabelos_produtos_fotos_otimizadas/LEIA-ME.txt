@@ -1,0 +1,5 @@
+Fotos de estúdio para o catálogo Denilson Cabelos
+
+25 imagens JPG em 1024 x 1024 px, com fundo cinza-escuro neutro e iluminação de estúdio. A edição mantém o produto e tenta preservar a embalagem e os rótulos originais. Confira detalhes pequenos de texto antes de publicar.
+
+Os arquivos estão numerados na mesma ordem alfabética das fotos recebidas. O CSV associa cada JPG ao arquivo original e deixa nome, categoria e preço para preencher com os dados reais.
