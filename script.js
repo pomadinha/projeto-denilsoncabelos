@@ -1,7 +1,7 @@
 "use strict";
 
 // CONFIGURAÇÃO DO PROJETO. Estes valores não representam estoque.
-const numeroWhatsApp = "5599991059284"; // 55 + DDD + telefone, sem símbolos.
+const numeroWhatsApp = "559984045994"; // 55 + DDD + telefone, sem símbolos.
 const limitePorPedido = 25; // Máximo de unidades de cada produto por pedido.
 
 const formulario = document.getElementById("formPedido");
