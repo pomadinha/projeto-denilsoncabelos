@@ -1,8 +1,5 @@
-"use strict";
-
-// CONFIGURAÇÃO DO PROJETO. Estes valores não representam estoque.
-const numeroWhatsApp = "5599991059284"; // 55 + DDD + telefone, sem símbolos.
-const limitePorPedido = 25; // Máximo de unidades de cada produto por pedido.
+const numeroWhatsApp = "5599991059284";
+const limitePorPedido = 25;
 
 const formulario = document.getElementById("formPedido");
 const aviso = document.getElementById("aviso");
@@ -17,80 +14,82 @@ const moeda = new Intl.NumberFormat("pt-BR", {
   currency: "BRL",
 });
 
-// Mapeia e confere o contrato HTML/JS uma vez, ao iniciar.
-const produtos = [];
+let produtos = [];
 let erroConfiguracao = "";
-try {
-  if (!Number.isSafeInteger(limitePorPedido) || limitePorPedido < 1) {
-    throw new Error("O limite por pedido precisa ser um inteiro positivo.");
+
+function mapearProdutosDOM() {
+  produtos = [];
+  erroConfiguracao = "";
+  try {
+    if (!Number.isSafeInteger(limitePorPedido) || limitePorPedido < 1) {
+      throw new Error("O limite por pedido precisa ser um inteiro positivo.");
+    }
+    const camposUsados = new Set();
+    for (const checkbox of formulario.querySelectorAll(
+      'input[name="produtos"]',
+    )) {
+      const campo = document.getElementById(checkbox.dataset.quantidade);
+      const nome = checkbox.dataset.nome?.trim();
+      if (
+        !checkbox.id ||
+        !nome ||
+        !campo ||
+        !formulario.contains(campo) ||
+        campo.type !== "number" ||
+        camposUsados.has(campo.id)
+      ) {
+        throw new Error(
+          "Confira os IDs, nomes e campos de quantidade do catálogo.",
+        );
+      }
+      if (!/^\d+(\.\d{1,2})?$/.test(checkbox.value)) {
+        throw new Error(
+          `Preço inválido para ${nome}. Use ponto e até duas casas decimais.`,
+        );
+      }
+      const [reais, decimal = ""] = checkbox.value.split(".");
+      const precoCentavos = Number(reais) * 100 + Number(decimal.padEnd(2, "0"));
+      if (
+        !Number.isSafeInteger(precoCentavos) ||
+        precoCentavos <= 0 ||
+        !Number.isSafeInteger(precoCentavos * limitePorPedido)
+      ) {
+        throw new Error(`Preço inválido para ${nome}.`);
+      }
+      if (!["true", "false"].includes(checkbox.dataset.disponivel)) {
+        throw new Error(
+          `Informe data-disponivel="true" ou "false" para ${nome}.`,
+        );
+      }
+      camposUsados.add(campo.id);
+      const indisponivel = checkbox.dataset.disponivel === "false";
+      checkbox.disabled = indisponivel;
+      campo.disabled = indisponivel;
+      campo.min = "0";
+      campo.max = String(limitePorPedido);
+      campo.step = "1";
+      if (indisponivel) campo.value = "0";
+      const status = document.getElementById(`disponibilidade-${checkbox.id}`);
+      if (status)
+        status.textContent = indisponivel
+          ? "Indisponível no momento"
+          : "Disponibilidade a confirmar";
+      produtos.push({
+        id: checkbox.id,
+        nome,
+        precoCentavos,
+        checkbox,
+        campo,
+        indisponivel,
+      });
+    }
+  } catch (erro) {
+    erroConfiguracao = erro.message;
+    console.error("Configuração do catálogo:", erro.message);
   }
-  const camposUsados = new Set();
-  for (const checkbox of formulario.querySelectorAll(
-    'input[name="produtos"]',
-  )) {
-    const campo = document.getElementById(checkbox.dataset.quantidade);
-    const nome = checkbox.dataset.nome?.trim();
-    if (
-      !checkbox.id ||
-      !nome ||
-      !campo ||
-      !formulario.contains(campo) ||
-      campo.type !== "number" ||
-      camposUsados.has(campo.id)
-    ) {
-      throw new Error(
-        "Confira os IDs, nomes e campos de quantidade do catálogo.",
-      );
-    }
-    if (!/^\d+(\.\d{1,2})?$/.test(checkbox.value)) {
-      throw new Error(
-        `Preço inválido para ${nome}. Use ponto e até duas casas decimais.`,
-      );
-    }
-    const [reais, decimal = ""] = checkbox.value.split(".");
-    const precoCentavos = Number(reais) * 100 + Number(decimal.padEnd(2, "0"));
-    if (
-      !Number.isSafeInteger(precoCentavos) ||
-      precoCentavos <= 0 ||
-      !Number.isSafeInteger(precoCentavos * limitePorPedido)
-    ) {
-      throw new Error(`Preço inválido para ${nome}.`);
-    }
-    if (!["true", "false"].includes(checkbox.dataset.disponivel)) {
-      throw new Error(
-        `Informe data-disponivel="true" ou "false" para ${nome}.`,
-      );
-    }
-    camposUsados.add(campo.id);
-    const indisponivel = checkbox.dataset.disponivel === "false";
-    checkbox.disabled = indisponivel;
-    campo.disabled = indisponivel;
-    campo.min = "0";
-    campo.max = String(limitePorPedido);
-    campo.step = "1";
-    if (indisponivel) campo.value = "0";
-    const status = document.getElementById(`disponibilidade-${checkbox.id}`);
-    if (status)
-      status.textContent = indisponivel
-        ? "Indisponível no momento"
-        : "Disponibilidade a confirmar";
-    produtos.push({
-      id: checkbox.id,
-      nome,
-      precoCentavos,
-      checkbox,
-      campo,
-      indisponivel,
-    });
-  }
-  if (!produtos.length)
-    throw new Error("Nenhum produto foi configurado no catálogo.");
-} catch (erro) {
-  erroConfiguracao = erro.message;
-  console.error("Configuração do catálogo:", erro.message);
+  atualizarResumo();
 }
 
-// A mesma validação e o mesmo cálculo atendem ao resumo e à finalização.
 function obterPedido() {
   if (erroConfiguracao)
     throw new Error(
@@ -188,7 +187,6 @@ function atualizarResumo() {
       return;
     }
     for (const item of pedido.itens) {
-      // Nomes e valores são inseridos como texto, sem interpretar HTML.
       const li = document.createElement("li");
       li.className = "pedido-item";
       const titulo = document.createElement("div");
@@ -221,7 +219,6 @@ function atualizarResumo() {
   }
 }
 
-// Digitação, setas do input e botões compartilham a atualização do resumo.
 formulario.addEventListener("input", function (evento) {
   if (produtos.some((produto) => produto.campo === evento.target))
     atualizarResumo();
@@ -261,7 +258,6 @@ formulario.addEventListener("reset", function () {
   }, 0);
 });
 
-// Finalização mantida em um único fluxo, como definido no projeto.
 formulario.addEventListener("submit", function (evento) {
   evento.preventDefault();
   atualizarResumo();
@@ -273,7 +269,6 @@ formulario.addEventListener("submit", function (evento) {
       produtos.find((produto) => !produto.indisponivel)?.campo.focus();
       return;
     }
-    // Confere formato, não a existência de uma conta no WhatsApp.
     if (!/^55[1-9]\d{9,10}$/.test(numeroWhatsApp)) {
       throw new Error(
         "O contato da barbearia precisa ser corrigido. Consulte o barbeiro diretamente.",
@@ -294,7 +289,6 @@ formulario.addEventListener("submit", function (evento) {
     ].join("\n");
     aviso.textContent =
       "Abrindo o WhatsApp. Confira a mensagem e toque em enviar.";
-    // Não envia automaticamente, não reserva e não desconta estoque.
     window.location.href = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
   } catch (erro) {
     aviso.textContent = erro.message;
@@ -302,6 +296,5 @@ formulario.addEventListener("submit", function (evento) {
   }
 });
 
-atualizarResumo();
-// Sincroniza os valores que o navegador restaurar ao voltar do WhatsApp.
+document.addEventListener("catalogo:atualizado", mapearProdutosDOM);
 window.addEventListener("pageshow", atualizarResumo);

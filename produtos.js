@@ -82,7 +82,7 @@ const catalogoProdutos = [
       "Pomada em pó para compor a finalização dos cabelos. Confira as instruções da embalagem antes de aplicar.",
     disponivel: true,
   },
-  ///////////////////////////////////////////////
+  /////////////////////////////////////////////////
   {
     id: "beard-oil",
     nome: "Beard Oil - Óleo para Barba",
