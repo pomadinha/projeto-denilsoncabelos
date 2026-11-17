@@ -1,0 +1,10 @@
+ATUALIZAÇÃO DA ÁREA ADMINISTRATIVA
+
+1. Faça uma cópia de segurança da pasta atual do seu projeto.
+2. Extraia estes arquivos diretamente dentro da pasta projeto-denilsoncabelos-main recuperada.
+3. Quando o Windows perguntar, substitua os arquivos existentes.
+4. Os arquivos novos devem ficar no mesmo nível de index.html e produtos.js.
+5. Leia GUIA-AREA-ADMINISTRATIVA.md e configure Firebase Authentication, UID do proprietário e firestore.rules antes de usar o painel.
+
+Arquivos substituídos: index.html, produtos.js, style.css e firebase-config.js.
+Arquivos novos: admin.html, admin.js, admin.css, admin-config.js, catalogo-bootstrap.js, firestore.rules e GUIA-AREA-ADMINISTRATIVA.md.

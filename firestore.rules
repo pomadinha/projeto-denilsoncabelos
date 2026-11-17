@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function proprietario() {
+      return request.auth != null
+        && request.auth.uid == 'COLE_AQUI_O_UID_DO_PROPRIETARIO';
+    }
+
+    // Os visitantes podem consultar o catálogo; apenas o proprietário pode alterá-lo.
+    match /produtos/{produtoId} {
+      allow read: if true;
+      allow create, update, delete: if proprietario();
+    }
+
+    // O marcador informa ao catálogo público quando deve usar os dados do banco.
+    match /config/{documento} {
+      allow read: if documento == 'catalogo';
+      allow create, update, delete: if documento == 'catalogo' && proprietario();
+    }
+
+    // Nenhuma outra coleção fica acessível por estas regras.
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}

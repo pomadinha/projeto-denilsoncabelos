@@ -1,7 +1,6 @@
-"use strict";
 // FONTE ÚNICA DOS PRODUTOS: dados demonstrativos, a substituir pelos reais.
 // O estoque não é informado. disponivel indica apenas se o item aceita consultas.
-const catalogoProdutos = [
+export const catalogoDemonstrativo = [
   {
     id: "gel-classea",
     nome: "ClasseA - Gel Cera Hidratante ",
@@ -318,39 +317,107 @@ const catalogoProdutos = [
     disponivel: true,
   },
 ];
-// Escapa o conteúdo antes de compor os cards. Os dados permanecem editáveis aqui.
+// Escapa os valores antes de inserir conteúdo vindo do banco no HTML.
 function escaparHTML(valor) {
-  return String(valor).replace(
+  return String(valor ?? "").replace(
     /[&<>"']/g,
-    (c) =>
+    (caractere) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
-        c
+        caractere
       ],
   );
 }
-const gradeProdutos = document.getElementById("gradeProdutos");
-gradeProdutos.innerHTML = catalogoProdutos
-  .map((p, i) => {
-    const imagens = (Array.isArray(p.imagens) ? p.imagens : [p.imagem]).filter(
-      Boolean,
-    );
-    const id = escaparHTML(p.id),
-      nome = escaparHTML(p.nome);
-    const preco = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(Number(p.preco));
-    return `<article class="produto" data-categoria="${escaparHTML(p.categoria)}" data-busca="${nome}" aria-labelledby="titulo-${id}">
+
+function imagemSegura(valor) {
+  const imagem = String(valor ?? "").trim();
+  if (
+    imagem.startsWith("assets/") ||
+    imagem.startsWith("data:image/jpeg;base64,") ||
+    imagem.startsWith("data:image/png;base64,") ||
+    imagem.startsWith("data:image/webp;base64,") ||
+    /^https:\/\//i.test(imagem) ||
+    /^http:\/\//i.test(imagem)
+  ) {
+    return imagem;
+  }
+  return "assets/logo.png";
+}
+
+function listaDeImagens(produto) {
+  const origem = produto.imagens ?? produto.imagem ?? [];
+  const lista = Array.isArray(origem) ? origem : [origem];
+  return lista.map(imagemSegura).filter(Boolean);
+}
+
+function renderizarProdutos(lista) {
+  const grade = document.getElementById("gradeProdutos");
+  if (!grade) return;
+
+  if (!lista.length) {
+    grade.innerHTML = '<p class="sem-produtos">Nenhum produto está cadastrado no momento.</p>';
+    return;
+  }
+
+  grade.innerHTML = lista
+    .map((produto, indice) => {
+      const imagens = listaDeImagens(produto);
+      const id = escaparHTML(produto.id);
+      const nome = escaparHTML(produto.nome);
+      const precoTexto = String(produto.preco ?? "0");
+      const preco = new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(Number(precoTexto));
+      const disponivel = produto.disponivel !== false;
+      return `<article class="produto" data-categoria="${escaparHTML(produto.categoria)}" data-busca="${nome}" aria-labelledby="titulo-${id}">
   <div class="produto-foto"><div class="galeria-fotos">
   ${imagens
     .map(
-      (foto, indice) =>
-        `<img src="${escaparHTML(foto)}" alt="${nome} - foto ${indice + 1}" width="480" height="400">`,
+      (foto, fotoIndice) =>
+        `<img src="${escaparHTML(foto)}" alt="${nome} - foto ${fotoIndice + 1}" width="480" height="400" loading="lazy">`,
     )
     .join("")}
-</div><span class="numero-produto">0${i + 1}</span><span class="categoria">${escaparHTML(p.categoria)}</span></div>
-  <div class="produto-corpo"><h3 id="titulo-${id}">${nome}</h3><p class="descricao">${escaparHTML(p.descricao)}<div class="produto-preco"><strong>${preco}</strong><span>por unidade</span></div><p class="disponibilidade" id="disponibilidade-${id}">Disponibilidade a confirmar</p>
-  <input hidden type="checkbox" name="produtos" id="${id}" value="${escaparHTML(p.preco)}" data-nome="${nome}" data-disponivel="${p.disponivel}" data-quantidade="quantidade-${id}">
-  <div class="quantidade-linha"><label for="quantidade-${id}">Quantidade</label><div class="controle-quantidade"><button type="button" data-alterar="-1" data-produto="${id}" aria-label="Diminuir quantidade de ${nome}" disabled>−</button><input type="number" id="quantidade-${id}" aria-label="Quantidade de ${nome}" data-produto="${id}" min="0" max="25" step="1" value="0" inputmode="numeric" aria-describedby="disponibilidade-${id} limiteQuantidade"><button type="button" data-alterar="1" data-produto="${id}" aria-label="Aumentar quantidade de ${nome}">+</button></div></div></div></article>`;
-  })
-  .join("");
+</div><span class="numero-produto">${String(indice + 1).padStart(2, "0")}</span><span class="categoria">${escaparHTML(produto.categoria)}</span></div>
+  <div class="produto-corpo"><h3 id="titulo-${id}">${nome}</h3><p class="descricao">${escaparHTML(produto.descricao || "Consulte o barbeiro para mais informações sobre este produto.")}</p>
+  <div class="produto-preco"><strong>${preco}</strong><span>por unidade</span></div><p class="disponibilidade" id="disponibilidade-${id}">${disponivel ? "Disponibilidade a confirmar" : "Indisponível no momento"}</p>
+  <input hidden type="checkbox" name="produtos" id="${id}" value="${escaparHTML(precoTexto)}" data-nome="${nome}" data-disponivel="${disponivel}" data-quantidade="quantidade-${id}">
+  <div class="quantidade-linha"><label for="quantidade-${id}">Quantidade</label><div class="controle-quantidade"><button type="button" data-alterar="-1" data-produto="${id}" aria-label="Diminuir quantidade de ${nome}" disabled>−</button><input type="number" id="quantidade-${id}" aria-label="Quantidade de ${nome}" data-produto="${id}" min="0" max="25" step="1" value="0" inputmode="numeric" aria-describedby="disponibilidade-${id} limiteQuantidade" ${disponivel ? "" : "disabled"}><button type="button" data-alterar="1" data-produto="${id}" aria-label="Aumentar quantidade de ${nome}" ${disponivel ? "" : "disabled"}>+</button></div></div></div></article>`;
+    })
+    .join("");
+}
+
+async function carregarCatalogo() {
+  const grade = document.getElementById("gradeProdutos");
+  if (!grade) return catalogoDemonstrativo;
+  const status = document.getElementById("statusCatalogo");
+
+  try {
+    const { db } = await import("./firebase-config.js");
+    const { collection, doc, getDoc, getDocs } = await import(
+      "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js"
+    );
+    const marcador = await getDoc(doc(db, "config", "catalogo"));
+    if (marcador.exists() && marcador.data().ativo === true) {
+      const resultado = await getDocs(collection(db, "produtos"));
+      const produtosBanco = resultado.docs
+        .map((registro) => ({ id: registro.id, ...registro.data() }))
+        .sort((a, b) => String(a.nome || "").localeCompare(String(b.nome || ""), "pt-BR"));
+      if (status) status.hidden = true;
+      renderizarProdutos(produtosBanco);
+      return produtosBanco;
+    }
+    if (status) status.hidden = true;
+    renderizarProdutos(catalogoDemonstrativo);
+    return catalogoDemonstrativo;
+  } catch (erro) {
+    console.warn("Não foi possível carregar o catálogo online; usando os dados locais.", erro);
+    renderizarProdutos(catalogoDemonstrativo);
+    if (status) {
+      status.textContent = "Não foi possível atualizar o catálogo. Os dados locais estão sendo exibidos; confirme preços e disponibilidade pelo WhatsApp.";
+      status.hidden = false;
+    }
+    return catalogoDemonstrativo;
+  }
+}
+
+export const catalogoCarregado = carregarCatalogo();
