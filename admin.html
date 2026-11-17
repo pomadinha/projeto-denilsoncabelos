@@ -23,13 +23,27 @@
       <section id="telaLogin" class="login-card" aria-labelledby="tituloLogin">
         <p class="sobretitulo">ACESSO RESTRITO</p>
         <h1 id="tituloLogin">Entrar no painel</h1>
-        <p class="texto-suave">Use a conta do proprietário cadastrada no Firebase.</p>
+        <p class="texto-suave">
+          Use a conta do proprietário cadastrada no Firebase.
+        </p>
         <form id="formLogin" class="form-login">
           <label for="emailAdmin">E-mail</label>
-          <input id="emailAdmin" type="email" autocomplete="username" required />
+          <input
+            id="emailAdmin"
+            type="email"
+            autocomplete="username"
+            required
+          />
           <label for="senhaAdmin">Senha</label>
-          <input id="senhaAdmin" type="password" autocomplete="current-password" required />
-          <button class="botao botao-verde" type="submit" id="btnEntrar">Entrar</button>
+          <input
+            id="senhaAdmin"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+          <button class="botao botao-verde" type="submit" id="btnEntrar">
+            Entrar
+          </button>
         </form>
         <p id="erroLogin" class="mensagem" role="status" aria-live="polite"></p>
       </section>
@@ -39,30 +53,57 @@
           <div>
             <p class="sobretitulo">CATÁLOGO DA BARBEARIA</p>
             <h1>Gerenciar produtos</h1>
-            <p class="texto-suave">Cadastre produtos e atualize preços, descrições, fotos e disponibilidade.</p>
+            <p class="texto-suave">
+              Cadastre produtos e atualize preços, descrições, fotos e
+              disponibilidade.
+            </p>
           </div>
           <div class="acoes-topo">
-            <button type="button" id="btnImportarIniciais" class="botao botao-contorno" hidden>Publicar catálogo atual no banco</button>
-            <button type="button" id="btnNovoProduto" class="botao botao-verde">+ Novo produto</button>
-            <button type="button" id="btnSair" class="botao botao-sair">Sair</button>
+            <button
+              type="button"
+              id="btnImportarIniciais"
+              class="botao botao-contorno"
+              hidden
+            >
+              Publicar catálogo atual no banco
+            </button>
+            <button type="button" id="btnNovoProduto" class="botao botao-verde">
+              + Novo produto
+            </button>
+            <button type="button" id="btnSair" class="botao botao-sair">
+              Sair
+            </button>
           </div>
         </div>
 
         <div id="avisoPainel" class="aviso-painel" hidden role="status"></div>
 
-        <section id="boxFormulario" class="editor-card" hidden aria-labelledby="tituloForm">
+        <section
+          id="boxFormulario"
+          class="editor-card"
+          hidden
+          aria-labelledby="tituloForm"
+        >
           <div class="editor-cabecalho">
             <div>
               <p class="sobretitulo">DADOS DO PRODUTO</p>
               <h2 id="tituloForm">Cadastrar produto</h2>
             </div>
-            <button type="button" id="btnFecharForm" class="botao botao-sair">Fechar</button>
+            <button type="button" id="btnFecharForm" class="botao botao-sair">
+              Fechar
+            </button>
           </div>
           <form id="formProduto" class="form-produto">
             <input type="hidden" id="prodId" />
             <label class="campo">
               <span>Nome *</span>
-              <input id="prodNome" type="text" maxlength="100" required placeholder="Ex.: Pomada modeladora" />
+              <input
+                id="prodNome"
+                type="text"
+                maxlength="100"
+                required
+                placeholder="Ex.: Pomada modeladora"
+              />
             </label>
             <label class="campo">
               <span>Categoria *</span>
@@ -75,39 +116,97 @@
             </label>
             <label class="campo">
               <span>Preço (R$) *</span>
-              <input id="prodPreco" type="number" min="0.01" step="0.01" required placeholder="25,00" />
+              <input
+                id="prodPreco"
+                type="number"
+                min="0.01"
+                step="0.01"
+                required
+                placeholder="25,00"
+              />
             </label>
             <label class="campo campo-largo">
               <span>Descrição</span>
-              <textarea id="prodDescricao" rows="3" maxlength="500" placeholder="Descreva o produto para os clientes."></textarea>
+              <textarea
+                id="prodDescricao"
+                rows="3"
+                maxlength="500"
+                placeholder="Descreva o produto para os clientes."
+              ></textarea>
             </label>
             <label class="campo campo-largo">
               <span>Imagens atuais ou caminhos/links</span>
-              <textarea id="prodImagens" rows="3" placeholder="Uma imagem por linha. Ex.: assets/produtos/cabelo/pomada.jpg"></textarea>
-              <small>Você pode usar caminhos da pasta assets/ ou links https. As fotos escolhidas abaixo serão anexadas ao produto.</small>
+              <textarea
+                id="prodImagens"
+                rows="3"
+                placeholder="Uma imagem por linha. Ex.: assets/produtos/cabelo/pomada.jpg"
+              ></textarea>
+              <small
+                >Você pode usar caminhos da pasta assets/ ou links https. As
+                fotos escolhidas abaixo serão anexadas ao produto.</small
+              >
             </label>
             <label class="campo campo-largo">
               <span>Adicionar fotos do computador ou celular</span>
-              <input id="prodFotosArquivos" type="file" accept="image/*" multiple />
-              <small>As imagens serão reduzidas antes de salvar. O banco permite até aproximadamente 700 KB de imagens por produto nesta configuração gratuita.</small>
+              <input
+                id="prodFotosArquivos"
+                type="file"
+                accept="image/*"
+                multiple
+              />
+              <small
+                >As imagens serão reduzidas antes de salvar. O banco permite até
+                aproximadamente 700 KB de imagens por produto nesta configuração
+                gratuita.</small
+              >
             </label>
             <div class="opcoes-form">
-              <label class="disponivel-check"><input id="prodDisponivel" type="checkbox" checked /> Disponível para consulta</label>
-              <label id="rotuloRemoverFotos" class="disponivel-check" hidden><input id="removerFotosBase64" type="checkbox" /> Remover fotos antigas enviadas pelo painel</label>
+              <label class="disponivel-check"
+                ><input id="prodDisponivel" type="checkbox" checked />
+                Disponível para consulta</label
+              >
+              <label id="rotuloRemoverFotos" class="disponivel-check" hidden
+                ><input id="removerFotosBase64" type="checkbox" /> Remover fotos
+                antigas enviadas pelo painel</label
+              >
             </div>
             <div class="form-acoes">
-              <button type="submit" id="btnSalvarProduto" class="botao botao-verde">Salvar produto</button>
-              <span id="statusSalvar" class="texto-suave" role="status" aria-live="polite"></span>
+              <button
+                type="submit"
+                id="btnSalvarProduto"
+                class="botao botao-verde"
+              >
+                Salvar produto
+              </button>
+              <span
+                id="statusSalvar"
+                class="texto-suave"
+                role="status"
+                aria-live="polite"
+              ></span>
             </div>
           </form>
         </section>
 
         <section class="lista-card" aria-labelledby="tituloLista">
           <div class="lista-cabecalho">
-            <div><p class="sobretitulo">ITENS CADASTRADOS</p><h2 id="tituloLista">Produtos <span id="contadorProdutos">0</span></h2></div>
-            <label class="busca-admin"><span class="sr-only">Buscar produto</span><input id="buscaAdmin" type="search" placeholder="Buscar produto..." /></label>
+            <div>
+              <p class="sobretitulo">ITENS CADASTRADOS</p>
+              <h2 id="tituloLista">
+                Produtos <span id="contadorProdutos">0</span>
+              </h2>
+            </div>
+            <label class="busca-admin"
+              ><span class="sr-only">Buscar produto</span
+              ><input
+                id="buscaAdmin"
+                type="search"
+                placeholder="Buscar produto..."
+            /></label>
           </div>
-          <p id="statusLista" class="texto-suave">Conectando ao banco de dados...</p>
+          <p id="statusLista" class="texto-suave">
+            Conectando ao banco de dados...
+          </p>
           <div id="listaAdmin" class="lista-produtos"></div>
         </section>
       </section>
