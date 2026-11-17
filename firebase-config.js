@@ -5,12 +5,13 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth
 import { getFirestore } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA0y7wROSqNCvdtX-VdKJXbR_hzt_0VMvU",
-  authDomain: "barbearia-denilson.firebaseapp.com",
-  projectId: "barbearia-denilson",
-  storageBucket: "barbearia-denilson.firebasestorage.app",
-  messagingSenderId: "648428190694",
-  appId: "1:648428190694:web:af640d0bde69338e94f427"
+  apiKey: "AIzaSyBjPxlES97Ko8JpUrDWeuE_Z_hI_tqECKU",
+  authDomain: "db-denilsoncabelos.firebaseapp.com",
+  projectId: "db-denilsoncabelos",
+  storageBucket: "db-denilsoncabelos.firebasestorage.app",
+  messagingSenderId: "134741865136",
+  appId: "1:134741865136:web:df034f2a4ced8dccf60175",
+  measurementId: "G-FS8M4BDDZJ",
 };
 
 export const app = initializeApp(firebaseConfig);

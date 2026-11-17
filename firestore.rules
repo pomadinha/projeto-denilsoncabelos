@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function proprietario() {
       return request.auth != null
-        && request.auth.uid == 'COLE_AQUI_O_UID_DO_PROPRIETARIO';
+        && request.auth.uid == 'CbtjK1EebsbjmpRS4ue5ayeGN2h1';
     }
 
     // Os visitantes podem consultar o catálogo; apenas o proprietário pode alterá-lo.
